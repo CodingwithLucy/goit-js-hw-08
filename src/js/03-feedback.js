@@ -1,4 +1,4 @@
-const _ = require('lodash.throttle');
+import throttle from 'lodash.throttle';
 
 document.addEventListener('DOMContentLoaded', (event) => {
     const form = document.querySelector('.feedback-form');
@@ -13,7 +13,7 @@ document.addEventListener('DOMContentLoaded', (event) => {
       messageInput.value = message;
     }
     
-    const saveState = _.throttle(() => {
+    const saveState = throttle(() => {
       const state = {
         email: emailInput.value,
         message: messageInput.value,
@@ -25,9 +25,14 @@ document.addEventListener('DOMContentLoaded', (event) => {
     
     form.addEventListener('submit', (event) => {
       event.preventDefault();
+
+      if (emailInput.value === "" || messageInput.value === "") {
+        return alert("Please fill in all the fields!");
+      }
+
       const state = {
-        email: emailInput.value,
-        message: messageInput.value,
+        email: emailInput.value.trim(),
+        message: messageInput.value.trim(),
       };
       console.log(state);
       emailInput.value = '';
